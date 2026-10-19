@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Vibrant Multi-Color Link Navigation */
         nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -46,7 +45,6 @@
             background: linear-gradient(135deg, #6366f1, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transition: all 0.3s ease;
         }
 
         nav ul li a::after {
@@ -71,7 +69,6 @@
             padding: 0 2rem;
         }
 
-        /* Full Multi-Color Gradient Hero Header */
         .hero-header {
             position: relative;
             width: 100%;
@@ -129,7 +126,6 @@
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
-        /* Multi-Color Accent Card for Recorder Controls */
         .recorder-box {
             background: #ffffff;
             padding: 2.5rem;
@@ -159,11 +155,6 @@
             padding: 0.5rem 1rem;
             border-radius: 12px;
             background: #f1f5f9;
-            transition: all 0.2s ease;
-        }
-
-        .options-group label:hover {
-            background: #e2e8f0;
         }
 
         .options-group input[type="checkbox"] {
@@ -196,10 +187,6 @@
             box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
         }
 
-        .btn-stop:hover {
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.5);
-        }
-
         .btn-download {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
@@ -207,10 +194,6 @@
             display: inline-block;
             text-align: center;
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
-        }
-
-        .btn-download:hover {
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
 
         .preview-section {
@@ -229,7 +212,7 @@
         }
 
         .status-msg {
-            color: #8b5cf6;
+            color: #10b981;
             margin-top: 0.85rem;
             font-weight: 700;
             font-size: 1.05rem;
@@ -237,42 +220,33 @@
     </style>
 </head>
 <body>
-    <!-- Multi-Color Link Navigation -->
     <nav>
         <ul>
-            <li><a href="/home" class="active">Home</a></li>
-            <li><a href="/recents">Recents Videos</a></li>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="recents.html">Recents Videos</a></li>
         </ul>
     </nav>
     
     <div class="container">
-        <!-- Full Multi-Color Gradient Hero Banner -->
         <header class="hero-header">
-            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop" alt="Multi Color Header Banner" class="hero-bg-image">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop" alt="Banner" class="hero-bg-image">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>Hamdan Screen Recorder</h1>
-                <p>Capture your browser tabs, windows, or entire screen effortlessly in ultra high-definition with customized audio preferences.</p>
+                <p>Capture your browser tabs, windows, or entire screen effortlessly with support for recordings of any length.</p>
             </div>
         </header>
 
         <div class="recorder-box">
-            <!-- Ticker Options -->
             <div id="optionsPanel" class="options-group">
-                <label>
-                    <input type="checkbox" id="screenOption" checked> 🎥 Screen
-                </label>
-                <label>
-                    <input type="checkbox" id="micOption"> 🎙️ Microphone
-                </label>
+                <label><input type="checkbox" id="screenOption" checked> 🎥 Screen</label>
+                <label><input type="checkbox" id="micOption"> 🎙️ Microphone</label>
             </div>
 
-            <!-- Start & Stop Buttons -->
             <button id="startBtn" class="btn" onclick="startRecording()">▶ Start Recording</button>
             <button id="stopBtn" class="btn btn-stop" onclick="stopRecording()" style="display: none;">⏹ Stop Recording</button>
         </div>
 
-        <!-- Video Preview and Download Output Section -->
         <div id="previewSection" class="preview-section">
             <video id="recordedVideo" controls></video>
             <br>
@@ -280,16 +254,22 @@
             <div id="statusMsg" class="status-msg"></div>
         </div>
     </div>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7R4005DBG0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-7R4005DBG0');
-</script>
     <script>
+        let db;
+        const request = indexedDB.open("HamdanRecorderDB", 1);
+
+        request.onupgradeneeded = function(event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("videos")) {
+                db.createObjectStore("videos", { keyPath: "id" });
+            }
+        };
+
+        request.onsuccess = function(event) {
+            db = event.target.result;
+        };
+
         let mediaRecorder;
         let recordedChunks = [];
         let combinedStream;
@@ -305,12 +285,7 @@
 
             try {
                 let tracks = [];
-
-                const displayStream = await navigator.mediaDevices.getDisplayMedia({
-                    video: true,
-                    audio: true 
-                });
-
+                const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
                 displayStream.getVideoTracks().forEach(track => tracks.push(track));
 
                 if (recordMic) {
@@ -318,12 +293,11 @@
                         const micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
                         micStream.getAudioTracks().forEach(track => tracks.push(track));
                     } catch (err) {
-                        alert("Microphone permission denied or device not found. Recording screen without voice.");
+                        alert("Microphone permission denied. Recording screen without voice.");
                     }
                 }
 
                 combinedStream = new MediaStream(tracks);
-
                 mediaRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm; codecs=vp9' });
                 recordedChunks = [];
 
@@ -341,13 +315,7 @@
                     videoElement.src = videoURL;
 
                     const now = new Date();
-                    const year = now.getFullYear();
-                    const month = String(now.getMonth() + 1).padStart(2, '0');
-                    const day = String(now.getDate()).padStart(2, '0');
-                    const hours = String(now.getHours()).padStart(2, '0');
-                    const minutes = String(now.getMinutes()).padStart(2, '0');
-                    const seconds = String(now.getSeconds()).padStart(2, '0');
-                    const timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+                    const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
                     const fileName = `Hamdan_Recording_${timestamp}.webm`;
 
                     const downloadBtn = document.getElementById('downloadBtn');
@@ -356,25 +324,17 @@
 
                     document.getElementById('previewSection').style.display = 'block';
 
-                    const formData = new FormData();
-                    formData.append('video', blob, fileName);
+                    if (db) {
+                        const transaction = db.transaction(["videos"], "readwrite");
+                        const store = transaction.objectStore("videos");
+                        store.put({ id: fileName, blob: blob, date: timestamp });
 
-                    document.getElementById('statusMsg').innerText = "Syncing to Recents Videos...";
-
-                    try {
-                        const response = await fetch('/upload', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const result = await response.json();
-                        if (result.success) {
+                        transaction.oncomplete = () => {
                             document.getElementById('statusMsg').innerText = "✓ Saved successfully to Recents Videos tab!";
-                        } else {
-                            document.getElementById('statusMsg').innerText = "Error saving to recents.";
-                        }
-                    } catch (err) {
-                        console.error("Upload failed:", err);
-                        document.getElementById('statusMsg').innerText = "Failed to sync with Recents tab.";
+                        };
+                        transaction.onerror = () => {
+                            document.getElementById('statusMsg').innerText = "Saved locally, but error indexing file.";
+                        };
                     }
 
                     combinedStream.getTracks().forEach(track => track.stop());
@@ -410,6 +370,5 @@
             document.getElementById('optionsPanel').style.pointerEvents = 'auto';
         }
     </script>
-
 </body>
 </html>
