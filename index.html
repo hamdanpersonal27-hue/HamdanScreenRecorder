@@ -3,359 +3,656 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamdan Screen Recorder - Home</title>
+    <title>Hamdan Screen Recorder - Pro Studio</title>
     <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #ec4899;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #faf5ff 100%);
-            color: #0f172a;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 1.25rem 2.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-        }
-
-        nav ul {
-            list-style: none;
             display: flex;
-            gap: 2.5rem;
+            justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
 
-        nav ul li a {
-            text-decoration: none;
-            font-size: 1.05rem;
-            font-weight: 700;
-            padding: 0.3rem 0;
-            position: relative;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -6px;
-            left: 0;
-            border-radius: 2px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after, nav ul li a.active::after {
-            width: 100%;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2.5rem auto;
-            padding: 0 2rem;
-        }
-
-        .hero-header {
-            position: relative;
-            width: 100%;
-            height: 380px;
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 3rem;
-            box-shadow: 0 20px 40px -15px rgba(124, 58, 237, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.75), rgba(124, 58, 237, 0.75), rgba(219, 39, 119, 0.75));
-            z-index: 2;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            color: #ffffff;
-            padding: 0 2rem;
-            max-width: 850px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.25rem;
-            margin-bottom: 0.85rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero-content p {
-            color: #f8fafc;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .recorder-box {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 2px solid transparent;
-            background-image: linear-gradient(white, white), linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.08);
-            max-width: 100%;
-        }
-
-        .options-group {
-            display: flex;
-            gap: 3rem;
-            margin-bottom: 2rem;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .options-group label {
+        .brand-logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            background: #f1f5f9;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
         }
 
-        .options-group input[type="checkbox"] {
-            width: 1.35rem;
-            height: 1.35rem;
-            accent-color: #8b5cf6;
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active, .nav-btn:hover {
+            color: var(--primary);
+            background: #f1f5f9;
+            border-color: var(--card-border);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .hero-box {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hero-box h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .hero-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .recorder-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-item {
+            background: #f8fafc;
+            border: 1px solid var(--card-border);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .option-item.active {
+            background: rgba(79, 70, 229, 0.06);
+            border-color: var(--primary);
+        }
+
+        .checkbox-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            background: #ffffff;
+            color: transparent;
+        }
+
+        .option-item.active .checkbox-box {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .settings-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .setting-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .custom-select {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .status-bar {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            padding: 0.85rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             color: white;
             border: none;
-            padding: 0.95rem 2rem;
-            font-size: 1.1rem;
+            padding: 0.85rem 1.75rem;
+            font-size: 1rem;
             font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
-            transition: all 0.3s ease;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
         }
 
-        .btn-stop {
-            background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
-        }
+        .btn-pause { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .btn-resume { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-stop { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .btn-download { background: linear-gradient(135deg, #10b981, #059669); text-decoration: none; display: inline-block; text-align: center; }
 
-        .btn-download {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
-        }
-
-        .preview-section {
-            margin-top: 2.5rem;
-            max-width: 100%;
+        .preview-box {
             display: none;
+            margin-top: 2rem;
         }
 
-        video {
+        .video-frame {
             width: 100%;
-            border-radius: 16px;
-            border: 2px solid #e2e8f0;
-            background: #0f172a;
-            margin-bottom: 1.25rem;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            background: #000;
+            margin-bottom: 1rem;
+            max-height: 480px;
         }
 
-        .status-msg {
-            color: #10b981;
-            margin-top: 0.85rem;
-            font-weight: 700;
-            font-size: 1.05rem;
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .video-card video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+            max-height: 200px;
+        }
+
+        .card-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            word-break: break-all;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.85rem;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-danger-sm {
+            background: #fee2e2;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .empty-text {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
         }
     </style>
 </head>
 <body>
+
     <nav>
-        <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="recents.html">Recents Videos</a></li>
-        </ul>
+        <a href="#" class="brand-logo" id="navHome">
+            <div class="logo-icon">REC</div>
+            Hamdan Recorder
+        </a>
+        <div class="nav-links">
+            <button class="nav-btn active" id="tabBtnHome">Home</button>
+            <button class="nav-btn" id="tabBtnRecents">Recent Videos</button>
+        </div>
     </nav>
-    
+
     <div class="container">
-        <header class="hero-header">
-            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop" alt="Banner" class="hero-bg-image">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1>Hamdan Screen Recorder</h1>
-                <p>Capture your browser tabs, windows, or entire screen effortlessly with support for recordings of any length.</p>
-            </div>
-        </header>
-
-        <div class="recorder-box">
-            <div id="optionsPanel" class="options-group">
-                <label><input type="checkbox" id="screenOption" checked> 🎥 Screen</label>
-                <label><input type="checkbox" id="micOption"> 🎙️ Microphone</label>
+        <!-- Home Tab -->
+        <div id="homeTab" class="tab-content active">
+            <div class="hero-box">
+                <h1>High-Quality Screen Recording</h1>
+                <p>Record your screen smoothly and export in formats like .mp4, .mov, .mkv, .avi, .webm, .wmv, or .avc.</p>
             </div>
 
-            <button id="startBtn" class="btn" onclick="startRecording()">▶ Start Recording</button>
-            <button id="stopBtn" class="btn btn-stop" onclick="stopRecording()" style="display: none;">⏹ Stop Recording</button>
+            <div class="recorder-card">
+                <div id="statusBar" class="status-bar">
+                    <div class="status-indicator">
+                        <div class="dot"></div>
+                        <span id="statusText">RECORDING LIVE</span>
+                    </div>
+                    <div id="timer" class="timer">00:00:00</div>
+                </div>
+
+                <div id="optionsPanel">
+                    <div class="options-grid">
+                        <div class="option-item active" id="optScreen">
+                            <div>
+                                <div style="font-weight: 700;">🎥 Screen Recording</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Capture display or window</div>
+                            </div>
+                            <div class="checkbox-box" id="checkScreen">✓</div>
+                        </div>
+
+                        <div class="option-item" id="optMic">
+                            <div>
+                                <div style="font-weight: 700;">🎙️ Microphone Audio</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Include voice narration</div>
+                            </div>
+                            <div class="checkbox-box" id="checkMic"></div>
+                        </div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="setting-group">
+                            <label class="setting-label">Resolution Quality</label>
+                            <select id="qualitySelect" class="custom-select">
+                                <option value="4k">4K Ultra HD (2160p)</option>
+                                <option value="1080p" selected>Full HD (1080p)</option>
+                                <option value="720p">HD (720p)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-group">
+                            <label class="setting-label">Export Video Format</label>
+                            <select id="formatSelect" class="custom-select">
+                                <option value="mp4" selected>MP4 Video (.mp4)</option>
+                                <option value="mov">QuickTime (.mov)</option>
+                                <option value="mkv">Matroska (.mkv)</option>
+                                <option value="avi">Audio Video Interleave (.avi)</option>
+                                <option value="webm">WebM Video (.webm)</option>
+                                <option value="wmv">Windows Media (.wmv)</option>
+                                <option value="avc">Advanced Video Coding (.avc)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions-row">
+                    <button id="startBtn" class="btn">▶ Start Recording</button>
+                    <button id="pauseBtn" class="btn btn-pause" style="display: none;">⏸ Pause</button>
+                    <button id="resumeBtn" class="btn btn-resume" style="display: none;">▶ Resume</button>
+                    <button id="stopBtn" class="btn btn-stop" style="display: none;">⏹ Stop Recording</button>
+                </div>
+
+                <div id="previewBox" class="preview-box">
+                    <h3 style="margin-bottom: 0.75rem;">Recording Preview</h3>
+                    <video id="recordedVideo" class="video-frame" controls></video>
+                    <br>
+                    <a id="downloadBtn" class="btn btn-download">⬇ Download Recording</a>
+                </div>
+            </div>
         </div>
 
-        <div id="previewSection" class="preview-section">
-            <video id="recordedVideo" controls></video>
-            <br>
-            <a id="downloadBtn" class="btn btn-download">⬇ Download Video</a>
-            <div id="statusMsg" class="status-msg"></div>
+        <!-- Recents Tab -->
+        <div id="recentsTab" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2>Saved Recordings</h2>
+                <button id="clearAllBtn" class="btn btn-danger-sm" style="padding: 0.6rem 1rem;">Clear All</button>
+            </div>
+            <div id="recentsContainer">
+                <div class="empty-text">Loading recordings...</div>
+            </div>
         </div>
     </div>
 
     <script>
-        let db;
-        const request = indexedDB.open("HamdanRecorderDB", 1);
+        // State and Database Initialization
+        let options = { screen: true, mic: false };
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let combinedStream = null;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let db = null;
 
-        request.onupgradeneeded = function(event) {
-            db = event.target.result;
+        const dbRequest = indexedDB.open("HamdanRecorderDB", 1);
+        dbRequest.onupgradeneeded = (e) => {
+            db = e.target.result;
             if (!db.objectStoreNames.contains("videos")) {
                 db.createObjectStore("videos", { keyPath: "id" });
             }
         };
+        dbRequest.onsuccess = (e) => { db = e.target.result; };
 
-        request.onsuccess = function(event) {
-            db = event.target.result;
-        };
+        // DOM Element Event Bindings
+        document.getElementById('tabBtnHome').addEventListener('click', () => switchTab('home'));
+        document.getElementById('navHome').addEventListener('click', (e) => { e.preventDefault(); switchTab('home'); });
+        document.getElementById('tabBtnRecents').addEventListener('click', () => switchTab('recents'));
 
-        let mediaRecorder;
-        let recordedChunks = [];
-        let combinedStream;
+        document.getElementById('optScreen').addEventListener('click', () => toggleOption('screen'));
+        document.getElementById('optMic').addEventListener('click', () => toggleOption('mic'));
+
+        document.getElementById('startBtn').addEventListener('click', startRecording);
+        document.getElementById('pauseBtn').addEventListener('click', pauseRecording);
+        document.getElementById('resumeBtn').addEventListener('click', resumeRecording);
+        document.getElementById('stopBtn').addEventListener('click', stopRecording);
+        document.getElementById('clearAllBtn').addEventListener('click', clearAllRecordings);
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+            if (tab === 'home') {
+                document.getElementById('homeTab').classList.add('active');
+                document.getElementById('tabBtnHome').classList.add('active');
+            } else {
+                document.getElementById('recentsTab').classList.add('active');
+                document.getElementById('tabBtnRecents').classList.add('active');
+                loadRecentVideos();
+            }
+        }
+
+        function toggleOption(type) {
+            options[type] = !options[type];
+            const item = document.getElementById(type === 'screen' ? 'optScreen' : 'optMic');
+            const check = document.getElementById(type === 'screen' ? 'checkScreen' : 'checkMic');
+
+            if (options[type]) {
+                item.classList.add('active');
+                check.style.color = '#fff';
+            } else {
+                item.classList.remove('active');
+                check.style.color = 'transparent';
+            }
+        }
+
+        function updateTimer() {
+            const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${hrs}:${mins}:${secs}`;
+        }
 
         async function startRecording() {
-            const recordScreen = document.getElementById('screenOption').checked;
-            const recordMic = document.getElementById('micOption').checked;
-
-            if (!recordScreen) {
-                alert("Please check the 'Screen' option to record!");
+            if (!options.screen) {
+                alert("Please enable Screen Recording option to start.");
                 return;
             }
 
             try {
                 let tracks = [];
-                const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-                displayStream.getVideoTracks().forEach(track => tracks.push(track));
+                const quality = document.getElementById('qualitySelect').value;
+                let videoConstraints = { video: true };
 
-                if (recordMic) {
+                if (quality === '4k') {
+                    videoConstraints.video = { width: { ideal: 3840 }, height: { ideal: 2160 } };
+                } else if (quality === '1080p') {
+                    videoConstraints.video = { width: { ideal: 1920 }, height: { ideal: 1080 } };
+                } else {
+                    videoConstraints.video = { width: { ideal: 1280 }, height: { ideal: 720 } };
+                }
+
+                const displayStream = await navigator.mediaDevices.getDisplayMedia(videoConstraints);
+                displayStream.getVideoTracks().forEach(t => tracks.push(t));
+
+                if (options.mic) {
                     try {
-                        const micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-                        micStream.getAudioTracks().forEach(track => tracks.push(track));
-                    } catch (err) {
-                        alert("Microphone permission denied. Recording screen without voice.");
+                        const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        micStream.getAudioTracks().forEach(t => tracks.push(t));
+                    } catch (e) {
+                        console.warn("Microphone access denied.");
                     }
                 }
 
                 combinedStream = new MediaStream(tracks);
-                mediaRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm; codecs=vp9' });
+                
+                let mimeType = 'video/webm; codecs=vp9';
+                if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+
+                mediaRecorder = new MediaRecorder(combinedStream, { mimeType });
                 recordedChunks = [];
 
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        recordedChunks.push(event.data);
-                    }
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) recordedChunks.push(e.data);
                 };
 
                 mediaRecorder.onstop = async () => {
+                    clearInterval(timerInterval);
+                    const selectedExt = document.getElementById('formatSelect').value;
                     const blob = new Blob(recordedChunks, { type: 'video/webm' });
                     const videoURL = URL.createObjectURL(blob);
-                    
+
                     const videoElement = document.getElementById('recordedVideo');
                     videoElement.src = videoURL;
 
                     const now = new Date();
                     const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
-                    const fileName = `Hamdan_Recording_${timestamp}.webm`;
+                    const fileName = `Hamdan_Rec_${timestamp}.${selectedExt}`;
 
                     const downloadBtn = document.getElementById('downloadBtn');
                     downloadBtn.href = videoURL;
                     downloadBtn.download = fileName;
+                    downloadBtn.innerText = `⬇ Download Recording (.${selectedExt})`;
 
-                    document.getElementById('previewSection').style.display = 'block';
+                    document.getElementById('previewBox').style.display = 'block';
 
                     if (db) {
-                        const transaction = db.transaction(["videos"], "readwrite");
-                        const store = transaction.objectStore("videos");
-                        store.put({ id: fileName, blob: blob, date: timestamp });
-
-                        transaction.oncomplete = () => {
-                            document.getElementById('statusMsg').innerText = "✓ Saved successfully to Recents Videos tab!";
-                        };
-                        transaction.onerror = () => {
-                            document.getElementById('statusMsg').innerText = "Saved locally, but error indexing file.";
-                        };
+                        const tx = db.transaction(["videos"], "readwrite");
+                        const store = tx.objectStore("videos");
+                        store.put({ id: fileName, blob: blob, date: new Date().toLocaleString() });
                     }
 
-                    combinedStream.getTracks().forEach(track => track.stop());
+                    combinedStream.getTracks().forEach(t => t.stop());
                 };
 
                 displayStream.getVideoTracks()[0].onended = () => {
-                    if (mediaRecorder && mediaRecorder.state !== "inactive") {
-                        stopRecording();
-                    }
+                    if (mediaRecorder && mediaRecorder.state !== "inactive") stopRecording();
                 };
 
-                mediaRecorder.start();
+                mediaRecorder.start(1000);
 
                 document.getElementById('startBtn').style.display = 'none';
-                document.getElementById('stopBtn').style.display = 'inline-block';
+                document.getElementById('pauseBtn').style.display = 'inline-flex';
+                document.getElementById('stopBtn').style.display = 'inline-flex';
+                document.getElementById('statusBar').style.display = 'flex';
                 document.getElementById('optionsPanel').style.opacity = '0.5';
                 document.getElementById('optionsPanel').style.pointerEvents = 'none';
-                document.getElementById('previewSection').style.display = 'none';
+                document.getElementById('previewBox').style.display = 'none';
 
-            } catch (error) {
-                console.error("Error starting recording:", error);
+                secondsElapsed = 0;
+                updateTimer();
+                timerInterval = setInterval(() => {
+                    secondsElapsed++;
+                    updateTimer();
+                }, 1000);
+
+            } catch (err) {
+                console.error("Recording error:", err);
+                alert("Failed to start recording. Ensure you granted screen share permissions.");
+            }
+        }
+
+        function pauseRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.pause();
+                clearInterval(timerInterval);
+                document.getElementById('pauseBtn').style.display = 'none';
+                document.getElementById('resumeBtn').style.display = 'inline-flex';
+                document.getElementById('statusText').innerText = "RECORDING PAUSED";
+            }
+        }
+
+        function resumeRecording() {
+            if (mediaRecorder && mediaRecorder.state === "paused") {
+                mediaRecorder.resume();
+                timerInterval = setInterval(() => {
+                    secondsElapsed++;
+                    updateTimer();
+                }, 1000);
+                document.getElementById('pauseBtn').style.display = 'inline-flex';
+                document.getElementById('resumeBtn').style.display = 'none';
+                document.getElementById('statusText').innerText = "RECORDING LIVE";
             }
         }
 
@@ -363,11 +660,66 @@
             if (mediaRecorder && mediaRecorder.state !== "inactive") {
                 mediaRecorder.stop();
             }
-
-            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('startBtn').style.display = 'inline-flex';
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('resumeBtn').style.display = 'none';
             document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('statusBar').style.display = 'none';
             document.getElementById('optionsPanel').style.opacity = '1';
             document.getElementById('optionsPanel').style.pointerEvents = 'auto';
+        }
+
+        function loadRecentVideos() {
+            if (!db) return;
+            const container = document.getElementById('recentsContainer');
+            const tx = db.transaction(["videos"], "readonly");
+            const store = tx.objectStore("videos");
+            const req = store.getAll();
+
+            req.onsuccess = () => {
+                const videos = req.result.reverse();
+                if (videos.length === 0) {
+                    container.innerHTML = `<div class="empty-text">No saved recordings found yet.</div>`;
+                    return;
+                }
+
+                let html = `<div class="videos-grid">`;
+                videos.forEach((item, idx) => {
+                    const url = URL.createObjectURL(item.blob);
+                    html += `
+                        <div class="video-card" id="card-${idx}">
+                            <video src="${url}" controls></video>
+                            <div class="card-info">
+                                <strong>${item.id}</strong><br>
+                                <span>${item.date}</span>
+                            </div>
+                            <div class="card-actions">
+                                <a href="${url}" download="${item.id}" class="btn btn-sm btn-download">⬇ Download</a>
+                                <button class="btn-danger-sm btn-sm" onclick="deleteVideo('${item.id}', 'card-${idx}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                container.innerHTML = html;
+            };
+        }
+
+        window.deleteVideo = function(id, cardId) {
+            if (!confirm("Delete this recording?")) return;
+            const tx = db.transaction(["videos"], "readwrite");
+            tx.objectStore("videos").delete(id);
+            tx.oncomplete = () => {
+                document.getElementById(cardId).remove();
+                if (document.querySelectorAll('.video-card').length === 0) loadRecentVideos();
+            };
+        };
+
+        function clearAllRecordings() {
+            if (!confirm("Delete ALL recordings?")) return;
+            const tx = db.transaction(["videos"], "readwrite");
+            tx.objectStore("videos").clear();
+            tx.oncomplete = () => loadRecentVideos();
         }
     </script>
 </body>
